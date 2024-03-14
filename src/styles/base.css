@@ -1,0 +1,11 @@
+@tailwind base;
+
+@layer base {
+  /* @import url(../assets/icomoon/style.css); */
+  html {
+    /*noinspection CssUnresolvedCustomProperty*/
+    font-family: var(--app-font);
+    font-size: 16px;
+    @apply scroll-smooth antialiased text-gray-700;
+  }
+}
