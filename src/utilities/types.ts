@@ -1,5 +1,18 @@
 import { HTMLProps, PropsWithChildren, ReactElement } from "react";
 
+export type ColorVariants =
+  | "primary"
+  | "secondary"
+  | "white"
+  | "black"
+  | "transparent"
+  | "current"
+  | "warning"
+  | "success"
+  | "error"
+  | "neutral"
+  | "gray";
+
 export type TWClassNames = HTMLProps<HTMLElement>["className"];
 export type FC<PropsType = {}> = {
   (

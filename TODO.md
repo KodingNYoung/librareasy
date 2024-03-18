@@ -1,14 +1,16 @@
 - Setup
-
   - Design system \*
-  - Hooks \*
-  - Icomoons \*
 
 - Development
+
   - Auth Layout
     - Login
     - Register
-  -
+  - Dashboard layout
+    - Library
+    - Setting
+    - Teams
+    - Overview
 
 - Post Development
   - [ ] Remove unused nextui element

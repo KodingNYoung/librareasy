@@ -1,7 +1,7 @@
 @tailwind base;
 
 @layer base {
-  /* @import url(../assets/icomoon/style.css); */
+  @import url(../assets/icomoon/style.css);
   html {
     /*noinspection CssUnresolvedCustomProperty*/
     font-family: var(--app-font);
