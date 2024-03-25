@@ -1,9 +1,9 @@
 "use client";
-import { useThemeMode } from "@/hooks/themeHooks";
 import { ThemeMode } from "@/utilities/enums";
 import { FC } from "@/utilities/types";
 import React from "react";
 import Icon from "../atoms/Icon";
+import { useThemeMode } from "@/hooks/themeHooks";
 
 const SwitchThemeBtn: FC = () => {
   const { switchMode, mode } = useThemeMode();

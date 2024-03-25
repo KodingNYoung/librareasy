@@ -33,7 +33,7 @@ const AppSelect: FC<Props> = ({
   return (
     <div className="w-full">
       {label && (
-        <label htmlFor={id || name} className="body-sm text-gray-500">
+        <label htmlFor={id || name} className="body-sm">
           {label}
         </label>
       )}
@@ -47,18 +47,15 @@ const AppSelect: FC<Props> = ({
         classNames={{
           mainWrapper: cls("h-full", mainWrapper),
           trigger: cls(
-            "p-0 bg-white dark:bg-neutral-800 border border-gray-200 rounded-sm shadow-none min-h-0 h-full p-2",
+            "p-0 rounded-sm shadow-none min-h-0 h-full p-2",
             trigger
           ),
-          popoverContent: cls(
-            "p-0 shadow-lg rounded-sm bg-white",
-            popoverContent
-          ),
+          popoverContent: cls("p-0 shadow-lg rounded-sm ", popoverContent),
           ...classNames,
         }}
         listboxProps={{
           itemClasses: {
-            base: "bg-error-200",
+            base: "",
             selectedIcon: cls("!hidden", selectedIcon),
             ...itemClasses,
           },
@@ -75,7 +72,7 @@ const AppSelect: FC<Props> = ({
               value={option.value}
               key={option.value}
               classNames={{
-                base: cls("data-[hover=true]:bg-white  bg-error-100", base),
+                base: cls("", base),
               }}
             >
               {option.label}
