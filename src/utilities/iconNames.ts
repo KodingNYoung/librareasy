@@ -8,4 +8,7 @@ export type IconNames =
   | "icon-home-02"
   | "icon-book-open-01"
   | "icon-x-close"
-  | "icon-menu-03";
+  | "icon-menu-03"
+  | "icon-plus"
+  | "icon-folder"
+  | "icon-trash-01";
