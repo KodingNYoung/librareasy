@@ -29,7 +29,7 @@ const Library: FC = () => {
           <Icon name="icon-plus" size={20} />
         </Button>
       </header>
-      <div className="grid grid-cols-[repeat(auto-fit,_100px)] gap-3 py-4">
+      <div className="grid grid-cols-[repeat(auto-fit,_200px)] gap-3 py-4">
         <Folder name="100L" id="100l" />
         <Folder name="200L" id="200l" />
         <Folder name="300L" id="300l" />
