@@ -66,7 +66,7 @@ const config: Config = {
         "display-lg": ["57px", { lineHeight: "64px", fontWeight: 600 }]
       },
       boxShadow: {
-        "auth-light": "2px 8px 8px 0px #AAAAAA40",
+        "auth-light": "2px 8px 8px 0px #AAAAAA4F",
         "auth-dark": " 2px 8px 8px 0px #43444533"
       }
     }
