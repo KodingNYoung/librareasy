@@ -11,8 +11,8 @@ const Header: FC = () => {
   const { toggleCollapse } = useContext(SidebarColllapseContext);
 
   return (
-    <header className="w-full h-28 sm:h-[90px] sticky z-10 top-0 left-0 sm:left-[263px] backdrop-blur-sm px-5 flex items-center">
-      <div className="bg-white dark:bg-neutral-800 rounded px-4 py-3 flex justify-between items-center gap-2 w-full">
+    <header className="w-full h-[88px] sm:h-[90px] sticky z-10 top-0 left-0 sm:left-[263px] backdrop-blur-sm px-2.5 sm:px-5 flex items-center">
+      <div className="bg-white dark:bg-neutral-800 rounded px-2 sm:px-4 py-2 sm:py-3 flex justify-between items-center gap-2 w-full">
         <Button
           isIconOnly
           variant="light"
