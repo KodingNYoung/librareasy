@@ -1,9 +1,9 @@
-import { ROUTES } from "@/utilities/constants";
+import { Routes } from "@/utilities/enums";
 import { PageFC } from "@/utilities/types";
 import { redirect } from "next/navigation";
 
 const RootPage: PageFC = () => {
-  redirect(ROUTES.LOGIN);
+  redirect(Routes.LOGIN);
 };
 
 export default RootPage;

@@ -11,4 +11,6 @@ export type IconNames =
   | "icon-menu-03"
   | "icon-plus"
   | "icon-folder"
-  | "icon-trash-01";
+  | "icon-trash-01"
+  | "icon-eye"
+  | "icon-eye-off";

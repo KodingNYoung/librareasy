@@ -1,24 +1,24 @@
 import { FC } from "@/utilities/types";
 import React from "react";
-import LoginForm from "./LoginForm";
+import RegisterForm from "./RegisterForm";
 import { Routes } from "@/utilities/enums";
 import Link from "next/link";
 
-const Login: FC = () => {
+const Register: FC = () => {
   return (
     <div className="w-full grid gap-5">
       <header className="text-center">
-        <h1 className="text-2xl font-bold">Login</h1>
+        <h1 className="text-2xl font-bold">Register</h1>
         <span className="text-base font-normal">
-          Welcome back! Sign in to continue
+          Create an account to start organising your files
         </span>
       </header>
-      <LoginForm />
+      <RegisterForm />
       <span className="text-center mt-5">
-        I'm a new user! <Link href={Routes.REGISTER}>Create account</Link>
+        I have an account! <Link href={Routes.LOGIN}>Login</Link>
       </span>
     </div>
   );
 };
 
-export default Login;
+export default Register;
