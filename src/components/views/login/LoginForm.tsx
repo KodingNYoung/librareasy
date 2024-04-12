@@ -1,22 +1,22 @@
 "use client";
+import { login } from "@/app/lib/actions/auth";
 import PasswordInput from "@/components/molecules/PasswordInput";
-import { Routes } from "@/utilities/enums";
-import { FC } from "@/utilities/types";
+import { FC, FormState } from "@/utilities/types";
 import { Button, Input } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
-import React, { FormEvent } from "react";
+import React from "react";
+import { useFormState } from "react-dom";
+
+type LoginFormState = {
+  email: string;
+  password: string;
+} & FormState;
 
 const LoginForm: FC = () => {
-  const router = useRouter();
-
-  const submitForm = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    router.push(Routes.OVERVIEW);
-  };
-
+  const [error, action] = useFormState(login, undefined);
   return (
-    <form className="flex flex-col gap-4" onSubmit={submitForm}>
+    <form className="flex flex-col gap-4" action={action}>
       <Input
+        name="email"
         type="email"
         label="Email"
         labelPlacement="outside"
@@ -28,6 +28,7 @@ const LoginForm: FC = () => {
         defaultValue=""
       />
       <PasswordInput
+        name="password"
         label="Password"
         labelPlacement="outside"
         variant="bordered"

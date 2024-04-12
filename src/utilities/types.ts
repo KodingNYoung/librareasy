@@ -58,3 +58,20 @@ declare module "react" {
     originalProps?: any;
   }
 }
+
+export type FormState<SuccessPayload = any, ErrorPayload = any> =
+  | {
+      redirectTo?: string;
+    }
+  | (
+      | {
+          redirectTo?: string;
+          message: { message: string };
+          payload?: SuccessPayload;
+        }
+      | {
+          redirectTo?: string;
+          message: { message: string };
+          payload?: ErrorPayload;
+        }
+    );
