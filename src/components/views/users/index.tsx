@@ -9,9 +9,13 @@ import UserModal from "./UserModal";
 import { useModal } from "@/hooks/modalHooks";
 import { PopupModes, Roles } from "@/utilities/enums";
 import AppTable, { TableColumnType } from "@/components/organisms/AppTable";
+import dayjs from "dayjs";
+import { deleteUser } from "@/app/lib/actions/db";
+import UserDeleteModal from "./UserDeleteModal";
 
+export type TUser = Omit<IUser, "_id"> & { _id: string };
 type Props = {
-  users: { data: IUser[]; total: number };
+  users: { data: TUser[]; total: number };
 };
 
 const columns: TableColumnType[] = [
@@ -40,15 +44,18 @@ const columns: TableColumnType[] = [
 
 const Users: FC<Props> = ({ users }) => {
   const [modalPayload, setModalPayload] = useState<{
-    data?: IUser;
+    data?: TUser;
     mode: PopupModes;
   } | null>(null);
 
   //   modal hooks
   const userModal = useModal(<UserModal {...modalPayload} />);
+  const deleteModal = useModal(
+    <UserDeleteModal user={modalPayload?.data as TUser} />
+  );
 
   //   functions
-  const render = useCallback((key: Key, row: IUser) => {
+  const render = useCallback((key: Key, row: TUser) => {
     switch (key) {
       case "name":
         return (
@@ -75,6 +82,19 @@ const Users: FC<Props> = ({ users }) => {
             {row.is_active ? "Active" : "Inactive"}
           </Chip>
         );
+      case "date_added":
+        return row?.createdAt ? (
+          <div className="text-default-foreground grid">
+            <span className="text-small">
+              {dayjs(row?.createdAt).format("MMMM DD, YYYY")}
+            </span>
+            <span className="text-tiny text-foreground-400">
+              {dayjs(row?.createdAt).format("HH:mm a")}
+            </span>
+          </div>
+        ) : (
+          "N/A"
+        );
       case "action":
         return (
           // Cannot edit or delete an admin
@@ -87,7 +107,12 @@ const Users: FC<Props> = ({ users }) => {
               >
                 <Icon name="icon-edit-03" size={18} />
               </Button>
-              <Button isIconOnly variant="light" color="danger">
+              <Button
+                isIconOnly
+                variant="light"
+                color="danger"
+                onPress={() => openModal(PopupModes.DELETE, row)}
+              >
                 <Icon name="icon-trash-01" size={18} />
               </Button>
             </div>
@@ -96,9 +121,13 @@ const Users: FC<Props> = ({ users }) => {
     }
   }, []);
   const openModal = useCallback(
-    (mode: PopupModes, data?: IUser) => {
+    (mode: PopupModes, data?: TUser) => {
       setModalPayload({ mode, data });
-      userModal.open();
+      if (mode === PopupModes.DELETE) {
+        deleteModal.open();
+      } else {
+        userModal.open();
+      }
     },
     [userModal]
   );
@@ -128,6 +157,7 @@ const Users: FC<Props> = ({ users }) => {
         }}
       />
       {userModal.content}
+      {deleteModal.content}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { Schema, model, models } from "mongoose";
 import { MongoTables } from "./enums";
 import { IOrganization, IUser } from "./types";
+import { Roles } from "@/utilities/enums";
 
 // User schema
 const userSchema = new Schema<IUser>(
@@ -9,7 +10,7 @@ const userSchema = new Schema<IUser>(
     last_name: { type: String, required: true, min: 3 },
     email: { type: String, required: true, unique: true, min: 3 },
     password: { type: String, required: true, min: 6 },
-    role: { type: String, default: false },
+    role: { type: String, default: Roles.MEMBER },
     is_active: { type: Boolean, default: false },
     img: { type: String },
     organizations: [

@@ -3,17 +3,24 @@ import { FC } from "@/utilities/types";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import React from "react";
 import { Roles } from "@/utilities/enums";
-import { IUser } from "@/app/lib/types";
+import { addUser, editUser } from "@/app/lib/actions/forms";
+import { TUser } from ".";
 
 type Props = {
   close: () => void;
   isEdit: boolean;
-  data?: IUser;
+  data?: TUser;
 };
 
 const UserModalForm: FC<Props> = ({ close, isEdit, data }) => {
+  const action = async (formData: FormData) => {
+    isEdit
+      ? await editUser(data?._id as string, formData)
+      : await addUser(formData);
+    close();
+  };
   return (
-    <form className="grid sm:grid-cols-2 gap-4 my-6">
+    <form className="grid sm:grid-cols-2 gap-4 my-6" action={action}>
       <Input
         name="first_name"
         label="First Name"
@@ -84,12 +91,11 @@ const UserModalForm: FC<Props> = ({ close, isEdit, data }) => {
         {item => <SelectItem key={item.value}>{item.label}</SelectItem>}
       </Select>
       <div className="col-span-2 flex justify-end items-center gap-2">
-        <Button size="lg" radius="sm" className="mt-2 w-fit" onPress={close}>
+        <Button radius="sm" className="mt-2 w-fit" onPress={close}>
           Close
         </Button>
         <Button
           color="primary"
-          size="lg"
           radius="sm"
           className="mt-2 w-fit"
           type="submit"

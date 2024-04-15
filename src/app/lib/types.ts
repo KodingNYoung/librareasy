@@ -11,6 +11,8 @@ export interface IUser {
   role?: Roles;
   is_active?: boolean;
   organizations?: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 export interface IOrganization {
   name: string;
