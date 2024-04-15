@@ -10,7 +10,7 @@ type ThemeModeContextType = {
 
 export const ThemeModeContext = createContext<ThemeModeContextType>({
   mode: ThemeMode.LIGHT,
-  switchMode: () => {},
+  switchMode: () => {}
 });
 
 export const ThemeModeProvider: FC = ({ children }) => {
@@ -22,7 +22,9 @@ export const ThemeModeProvider: FC = ({ children }) => {
   };
   return (
     <ThemeModeContext.Provider value={{ mode: themeMode, switchMode }}>
-      <main className={cls(themeMode)}>{children}</main>
+      <body className={cls(themeMode)}>
+        <main>{children}</main>
+      </body>
     </ThemeModeContext.Provider>
   );
 };

@@ -7,17 +7,15 @@ import { LayoutFC } from "@/utilities/types";
 export const metadata: Metadata = {
   title: {
     default: "Librareasy",
-    template: "%s | Librareasy",
+    template: "%s | Librareasy"
   },
-  description: "Save books, get books.",
+  description: "Save books, get books."
 };
 
 const RootLayout: LayoutFC = ({ children }) => {
   return (
     <html lang="en" className={NotoSansDisplay.variable}>
-      <body>
-        <Providers>{children}</Providers>
-      </body>
+      <Providers>{children}</Providers>
     </html>
   );
 };
