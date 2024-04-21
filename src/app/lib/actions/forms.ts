@@ -5,6 +5,53 @@ import { Routes } from "@/utilities/enums";
 // @ts-ignore
 import bcrypt from "bcrypt";
 import { fetchUserById } from "../data";
+import { signIn } from "@/auth";
+import { AuthError } from "next-auth";
+import { ZodError, z } from "zod";
+import { FormState } from "@/utilities/types";
+import { extractZodErrors, generateFormResponse } from "@/utilities/helpers";
+import { loginValidation } from "../validations";
+import { LoginFields } from "@/components/views/login/LoginForm";
+
+export const login = async (
+  state: FormState<LoginFields>,
+  formData: FormData
+) => {
+  const { successResponse, errorResponse, fieldValidationError } =
+    generateFormResponse<LoginFields>();
+  const { email, password } = Object.fromEntries(formData);
+  const parsedCredentials = loginValidation.safeParse({ email, password });
+  try {
+    if (parsedCredentials.success) {
+      await signIn("credentials", formData);
+      return successResponse("Successful login");
+    } else {
+      throw parsedCredentials.error;
+    }
+  } catch (err) {
+    console.log("log [form action]:", err);
+
+    if (err instanceof ZodError) {
+      const errors = extractZodErrors(err);
+      return fieldValidationError(errors);
+    }
+
+    if (err instanceof AuthError) {
+      console.log({ errType: err.type });
+      let msg;
+      switch (err.type) {
+        case "CredentialsSignin":
+          msg = "Invalid credentials.";
+          break;
+        default:
+          msg = "Something went wrong.";
+          break;
+      }
+      return errorResponse(msg);
+    }
+    throw err;
+  }
+};
 
 export const addUser = async (formData: FormData) => {
   const { first_name, last_name, email, password, role } = Object.fromEntries(

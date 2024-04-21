@@ -1,6 +1,6 @@
 "use client";
 import { FC } from "@/utilities/types";
-import React, { useContext } from "react";
+import React, { ReactNode, useContext } from "react";
 import { Button, Divider, Listbox, ListboxItem, User } from "@nextui-org/react";
 import Icon from "../atoms/Icon";
 import { cls } from "@/utilities/helpers";
@@ -8,6 +8,12 @@ import { SidebarColllapseContext } from "@/contexts/layout";
 import { usePathname, useRouter } from "next/navigation";
 import { Routes } from "@/utilities/enums";
 import { IconNames } from "@/utilities/iconNames";
+import { signOut } from "@/auth";
+import LogoutBtn from "../molecules/LogoutBtn";
+
+type Props = {
+  logoutBtn: ReactNode;
+};
 
 const routeItems: {
   key: string;
@@ -41,7 +47,7 @@ const routeItems: {
   }
 ];
 
-const Sidebar: FC = () => {
+const Sidebar: FC<Props> = ({ logoutBtn }) => {
   const router = useRouter();
   const pathname = usePathname();
   const { toggleCollapse, isCollapsed } = useContext(SidebarColllapseContext);
@@ -108,15 +114,7 @@ const Sidebar: FC = () => {
           )}
         </Listbox>
       </nav>
-      <Button
-        variant="light"
-        className="mx-6 m-2 flex justify-start items-center gap-2"
-        color="danger"
-        startContent={<Icon name="icon-log-out-01" size={24} />}
-        onClick={() => router.push(Routes.LOGIN)}
-      >
-        <span>Logout</span>
-      </Button>
+      {logoutBtn}
     </aside>
   );
 };

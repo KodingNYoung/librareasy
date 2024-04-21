@@ -39,6 +39,16 @@ export const fetchUserById = async (id: string) => {
     throw err;
   }
 };
+export const fetchUserByEmail = async (email: string) => {
+  try {
+    connectToDB();
+    const user = await User.findOne({ email });
+    return user;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
 
 export const fetchOrganizations = async (
   q: string,
