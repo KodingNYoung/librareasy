@@ -13,4 +13,6 @@ export type IconNames =
   | "icon-folder"
   | "icon-trash-01"
   | "icon-eye"
-  | "icon-eye-off";
+  | "icon-eye-off"
+  | "icon-edit-03"
+  | "icon-search-refraction";

@@ -1,13 +1,14 @@
+import { Routes } from "@/utilities/enums";
 import { PageFC } from "@/utilities/types";
 import { Metadata } from "next";
-import React from "react";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Teams",
+  title: "Teams"
 };
 
 const TeamsPage: PageFC = () => {
-  return <div>TeamsPage</div>;
+  return redirect(Routes.USERS);
 };
 
 export default TeamsPage;
