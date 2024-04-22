@@ -29,7 +29,7 @@ export const login = async (
       throw parsedCredentials.error;
     }
   } catch (err) {
-    console.log("log [form action]:", err);
+    // console.log("log [form action]:", err);
 
     if (err instanceof ZodError) {
       const errors = extractZodErrors(err);
@@ -37,7 +37,7 @@ export const login = async (
     }
 
     if (err instanceof AuthError) {
-      console.log({ errType: err.type });
+      //   console.log({ errType: err.type });
       let msg;
       switch (err.type) {
         case "CredentialsSignin":
@@ -69,7 +69,7 @@ export const addUser = async (formData: FormData) => {
       is_active: false
     });
   } catch (err) {
-    console.log("log [form actions]:", err);
+    // console.log("log [form actions]:", err);
     throw err;
   }
   revalidatePath(Routes.USERS);
@@ -86,7 +86,7 @@ export const editUser = async (id: string, formData: FormData) => {
       role
     });
   } catch (err) {
-    console.log("log [form actions]:", err);
+    // console.log("log [form actions]:", err);
     throw err;
   }
   revalidatePath(Routes.USERS);
@@ -99,14 +99,14 @@ export const removeUser = async (userId: string) => {
   try {
     const user = await fetchUserById(userId);
     if (user.organizations.length > 1) {
-      console.log("Updating!!!!");
+      //   console.log("Updating!!!!");
       // TODO: update the user organization with an array with this organization's id omitted.
     } else {
       await deleteUser(user?._id);
-      console.log("Deleting!!!!");
+      //   console.log("Deleting!!!!");
     }
   } catch (err) {
-    console.log("log [form actions]:", err);
+    // console.log("log [form actions]:", err);
     throw err;
   }
   revalidatePath(Routes.USERS);

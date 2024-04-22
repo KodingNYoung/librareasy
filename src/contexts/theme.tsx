@@ -2,6 +2,8 @@ import { ThemeMode } from "@/utilities/enums";
 import { cls } from "@/utilities/helpers";
 import { FC } from "@/utilities/types";
 import { createContext, useState } from "react";
+import { Slide, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type ThemeModeContextType = {
   mode: ThemeMode;
@@ -24,6 +26,19 @@ export const ThemeModeProvider: FC = ({ children }) => {
     <ThemeModeContext.Provider value={{ mode: themeMode, switchMode }}>
       <body className={cls(themeMode)}>
         <main>{children}</main>
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme={themeMode}
+          transition={Slide}
+        />
       </body>
     </ThemeModeContext.Provider>
   );

@@ -2,10 +2,12 @@
 import { login } from "@/app/lib/actions/forms";
 import PasswordInput from "@/components/molecules/PasswordInput";
 import SubmitBtn from "@/components/molecules/SubmitBtn";
+import { useFormToast } from "@/hooks/toastHooks";
 import { FC, FormState } from "@/utilities/types";
 import { Input } from "@nextui-org/react";
 import React from "react";
 import { useFormState } from "react-dom";
+import { toast } from "react-toastify";
 
 export type LoginFields = "email" | "password";
 
@@ -25,6 +27,8 @@ const LoginForm: FC = () => {
     initialValues
   );
 
+  const formRef = useFormToast(response, "Authenticating");
+
   //   const state = {
   //     success: { message: "Test success message" },
   //     error: { message: "Test error message" },
@@ -32,11 +36,11 @@ const LoginForm: FC = () => {
   //     type: "validation" || "request"
   //   };
 
-  console.log(response);
-  
-
+  //   console.log(response);
+  //   const test = toast.error("Hello");
+  //   console.log(test);
   return (
-    <form className="flex flex-col gap-4" action={action}>
+    <form className="flex flex-col gap-4" action={action} ref={formRef}>
       <Input
         name="email"
         label="Email"

@@ -6,11 +6,7 @@ import { useFormStatus } from "react-dom";
 type Props = ButtonProps & {};
 
 const SubmitBtn: FC<Props> = ({ children, ...props }) => {
-  const status = useFormStatus();
-  const { pending } = status;
-
-  console.log(status);
-
+  const { pending } = useFormStatus();
   return (
     <Button
       size="lg"

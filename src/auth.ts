@@ -2,10 +2,9 @@ import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
 import credentials from "next-auth/providers/credentials";
 import { fetchUserByEmail } from "@/app/lib/data";
-import { z } from "zod";
 // @ts-ignore
 import bcrypt from "bcrypt";
-
+import { IUser } from "./app/lib/types";
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
@@ -19,8 +18,24 @@ export const { auth, signIn, signOut } = NextAuth({
         if (!user) return null;
         const passwordMatches = await bcrypt.compare(password, user.password);
         if (!passwordMatches) return null;
-        return user;
+        return user as IUser;
       }
     })
-  ]
+  ],
+  callbacks: {
+    async jwt({ token, user }) {
+      console.log({ action: "jwt", token, user });
+      if (user) {
+        token.picture = user.image;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token) {
+        console.log({ action: "session", session, token });
+        session.user.image = "";
+      }
+      return session;
+    }
+  }
 });
