@@ -8,7 +8,6 @@ import { SidebarColllapseContext } from "@/contexts/layout";
 import { usePathname, useRouter } from "next/navigation";
 import { Routes } from "@/utilities/enums";
 import { IconNames } from "@/utilities/iconNames";
-import { signOut } from "@/auth";
 import LogoutBtn from "../molecules/LogoutBtn";
 
 type Props = {

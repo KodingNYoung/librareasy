@@ -8,9 +8,11 @@ const OrganizationLayout: FC = ({ children }) => {
   return (
     <div className="flex min-h-screen text-slate-900 dark:text-white bg-[#F4F7FE] dark:bg-neutral-900 transition-colors">
       <Sidebar logoutBtn={<LogoutBtn />} />
-      <div className="w-full sm:pl-[260px] h-full">
+      <div className="w-full sm:pl-[260px] h-screen overflow-y-hidden">
         <Header />
-        <main className="h-full">{children}</main>
+        <main className="h-[calc(100%_-_88px)] sm:h-[calc(100%_-_90px)]">
+          {children}
+        </main>
       </div>
     </div>
   );

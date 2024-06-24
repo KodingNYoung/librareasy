@@ -2,6 +2,8 @@ import { Button } from "@nextui-org/react";
 import React from "react";
 import Icon from "../atoms/Icon";
 import { FC } from "@/utilities/types";
+import { redirect } from "next/navigation";
+import { Routes } from "@/utilities/enums";
 
 const LogoutBtn: FC = () => {
   return (
@@ -9,7 +11,7 @@ const LogoutBtn: FC = () => {
       action={async () => {
         "use server";
         // const res = await signOut();
-        console.log("logout");
+        redirect(Routes.LOGIN);
       }}
       className="w-full flex flex-col"
     >
