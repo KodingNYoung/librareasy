@@ -43,7 +43,7 @@ export const fetchUserByEmail = async (email: string) => {
   try {
     connectToDB();
     const user = await User.findOne({ email });
-    return user;
+    return JSON.parse(JSON.stringify(user));
   } catch (err) {
     console.log(err);
     throw err;

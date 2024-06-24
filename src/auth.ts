@@ -2,9 +2,10 @@ import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
 import credentials from "next-auth/providers/credentials";
 import { fetchUserByEmail } from "@/app/lib/data";
+import { IUser } from "./app/lib/types";
 // @ts-ignore
 import bcrypt from "bcrypt";
-import { IUser } from "./app/lib/types";
+
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
@@ -23,18 +24,10 @@ export const { auth, signIn, signOut } = NextAuth({
     })
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      console.log({ action: "jwt", token, user });
-      if (user) {
-        token.picture = user.image;
-      }
+    async jwt({ token }) {
       return token;
     },
-    async session({ session, token }) {
-      if (token) {
-        console.log({ action: "session", session, token });
-        session.user.image = "";
-      }
+    async session({ session }) {
       return session;
     }
   }

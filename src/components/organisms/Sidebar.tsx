@@ -5,11 +5,9 @@ import { Button, Divider, Listbox, ListboxItem, User } from "@nextui-org/react";
 import Icon from "../atoms/Icon";
 import { cls } from "@/utilities/helpers";
 import { SidebarColllapseContext } from "@/contexts/layout";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Routes } from "@/utilities/enums";
 import { IconNames } from "@/utilities/iconNames";
-import { signOut } from "@/auth";
-import LogoutBtn from "../molecules/LogoutBtn";
 
 type Props = {
   logoutBtn: ReactNode;
@@ -48,9 +46,9 @@ const routeItems: {
 ];
 
 const Sidebar: FC<Props> = ({ logoutBtn }) => {
-  const router = useRouter();
   const pathname = usePathname();
   const { toggleCollapse, isCollapsed } = useContext(SidebarColllapseContext);
+
   return (
     <aside
       className={cls(
