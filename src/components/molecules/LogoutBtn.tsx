@@ -1,7 +1,6 @@
 import { Button } from "@nextui-org/react";
 import React from "react";
 import Icon from "../atoms/Icon";
-import { signOut } from "@/auth";
 import { FC } from "@/utilities/types";
 
 const LogoutBtn: FC = () => {
@@ -9,8 +8,8 @@ const LogoutBtn: FC = () => {
     <form
       action={async () => {
         "use server";
-        const res = await signOut();
-        console.log(res);
+        // const res = await signOut();
+        console.log("logout");
       }}
       className="w-full flex flex-col"
     >

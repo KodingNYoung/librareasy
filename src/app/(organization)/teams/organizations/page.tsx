@@ -1,4 +1,3 @@
-import { fetchOrganizations } from "@/app/lib/data";
 import Organizations from "@/components/views/organizations";
 import { PageFC } from "@/utilities/types";
 import { Metadata } from "next";
@@ -13,9 +12,7 @@ const OrganizationsPage: PageFC = async ({ searchParams }) => {
   const page = Number(searchParams?.page || 1);
   const limit = 5;
 
-  const organizations = await fetchOrganizations(q as string, page, limit);
-
-  return <Organizations organizations={organizations} />;
+  return <Organizations organizations={{ data: [], total: 0 }} />;
 };
 
 export default OrganizationsPage;

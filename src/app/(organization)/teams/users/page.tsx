@@ -1,4 +1,3 @@
-import { fetchUsers } from "@/app/lib/data";
 import Users from "@/components/views/users";
 import { PageFC } from "@/utilities/types";
 import { Metadata } from "next";
@@ -9,13 +8,7 @@ export const metadata: Metadata = {
 };
 
 const UsersPage: PageFC = async ({ searchParams }) => {
-  const q = searchParams?.q || "";
-  const page = Number(searchParams?.page || 1);
-  const limit = 5;
-
-  const users = await fetchUsers(q as string, page, limit);
-
-  return <Users users={users} />;
+  return <Users users={{ total: 0, data: [] }} />;
 };
 
 export default UsersPage;

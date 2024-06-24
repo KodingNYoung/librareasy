@@ -10,7 +10,6 @@ import { useModal } from "@/hooks/modalHooks";
 import { PopupModes, Roles } from "@/utilities/enums";
 import AppTable, { TableColumnType } from "@/components/organisms/AppTable";
 import dayjs from "dayjs";
-import { deleteUser } from "@/app/lib/actions/db";
 import UserDeleteModal from "./UserDeleteModal";
 
 export type TUser = Omit<IUser, "_id"> & { _id: string };
