@@ -8,9 +8,9 @@ import React from "react";
 const Providers: FC = ({ children }) => {
   const router = useRouter();
   return (
-    <ThemeModeProvider>
-      <NextUIProvider navigate={router.push}>{children}</NextUIProvider>
-    </ThemeModeProvider>
+    <NextUIProvider navigate={router.push}>
+      <ThemeModeProvider>{children}</ThemeModeProvider>
+    </NextUIProvider>
   );
 };
 

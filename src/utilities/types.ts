@@ -53,12 +53,23 @@ export type MetadataProps<
   searchParams: SP;
 };
 
-export type FormState<Fields extends string = any> = {
-  fields?: { [field in Fields]?: string };
-  errorType?: "validation" | "request";
-  error?: { message: string };
-  success?: { message: string };
-};
+export type FormState =
+  | {}
+  | {
+      success: true;
+      message: string;
+      data?: any;
+    }
+  | {
+      fields: { [field: string]: string };
+      errorType?: "validation";
+    }
+  | {
+      success: false;
+      message: string;
+      errorType: "request";
+    };
+
 declare module "react" {
   interface HTMLAttributes<T> {
     isDisabled?: boolean;

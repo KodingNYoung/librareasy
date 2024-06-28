@@ -15,6 +15,7 @@ import {
 } from "@nextui-org/react";
 import React, {
   ChangeEvent,
+  HTMLProps,
   Key,
   ReactNode,
   useCallback,
@@ -38,6 +39,9 @@ type Props = TableProps & {
   renderCell: (key: Key, row: any) => ReactNode;
   actions?: ReactNode;
   classNames?: { [slot in Slots]?: string };
+  rowProps?: Omit<HTMLProps<HTMLTableRowElement>, "as" | "onDoubleClick"> & {
+    onDoubleClick: (row: any) => void;
+  };
   searchProps?: InputProps & {
     onSearch?: (e: ChangeEvent<HTMLInputElement>) => void;
     placeholder?: string;
@@ -59,6 +63,7 @@ const AppTable: FC<Props> = ({
   searchProps = {},
   paginationProps = { totalCount: 0, rowsPerPageOptions: [] },
   classNames: { top, bottom, root, ...classNames } = {},
+  rowProps,
   ...props
 }) => {
   const {
@@ -172,8 +177,13 @@ const AppTable: FC<Props> = ({
         </TableHeader>
         <TableBody items={data} emptyContent={"No rows to display."}>
           {item => {
+            const { onDoubleClick, className, ...props } = rowProps || {};
             return (
-              <TableRow key={item?._id}>
+              <TableRow
+                key={item?.id}
+                onDoubleClick={() => onDoubleClick && onDoubleClick(item)}
+                {...props}
+              >
                 {columnKey => (
                   <TableCell>{renderCell(columnKey, item)}</TableCell>
                 )}

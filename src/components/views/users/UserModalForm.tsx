@@ -81,8 +81,7 @@ const UserModalForm: FC<Props> = ({ close, isEdit, data }) => {
           { value: "member", label: "Member" }
         ]}
         classNames={{
-          base: "col-span-2",
-          listbox: "text-monochrome-1800 dark:text-monochrome-100"
+          base: "col-span-2"
         }}
         selectionMode="single"
         defaultSelectedKeys={[data?.role || Roles.MEMBER]}

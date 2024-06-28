@@ -14,8 +14,12 @@ export const metadata: Metadata = {
 
 const RootLayout: LayoutFC = ({ children }) => {
   return (
-    <html lang="en" className={NotoSansDisplay.variable}>
-      <Providers>{children}</Providers>
+    <html lang="en" className={NotoSansDisplay.variable + " dark"}>
+      <body>
+        <main>
+          <Providers>{children}</Providers>
+        </main>
+      </body>
     </html>
   );
 };
