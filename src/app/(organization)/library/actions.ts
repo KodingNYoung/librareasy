@@ -1,5 +1,5 @@
 "use server";
-import { createEntity } from "@/firebase/entities";
+import { createEntity, updateEntity } from "@/firebase/entities";
 import { Routes } from "@/utilities/enums";
 import {
   extractZodErrors,
@@ -26,7 +26,37 @@ export const createFolder = async (state: FormState, formData: FormData) => {
       if (res.success) {
         revalidatePath(Routes.LIBRARY, "page");
         revalidatePath(`${Routes.FOLDER}/[folder]`, "page");
-        return successResponse("Creation successful");
+        return successResponse("Created");
+      }
+      throw res.err;
+    } else {
+      throw parsedPayload.error;
+    }
+  } catch (err) {
+    if (err instanceof ZodError) {
+      const errors = extractZodErrors(err);
+      return validationError(errors);
+    }
+    console.log(err);
+    return errorResponse("Something went wrong");
+  }
+};
+
+export const renameFolder = async (state: FormState, formData: FormData) => {
+  const { successResponse, errorResponse, validationError } =
+    generateFormResponse();
+  const { name, id } = Object.fromEntries(formData);
+  const parsedPayload = folderValidation.safeParse({ name });
+  try {
+    if (parsedPayload.success) {
+      const payload = {
+        name: name as string
+      };
+      const res = await updateEntity(payload, id as string);
+      if (res.success) {
+        revalidatePath(Routes.LIBRARY, "page");
+        revalidatePath(`${Routes.FOLDER}/[folder]`, "page");
+        return successResponse("Updated");
       }
       throw res.err;
     } else {

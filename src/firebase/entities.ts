@@ -1,4 +1,13 @@
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import {
+  Timestamp,
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where
+} from "firebase/firestore";
 import { db } from ".";
 import { TEntity } from "@/utilities/objectTypes";
 import { converter } from "./utils";
@@ -35,8 +44,19 @@ export const getAllEntities = async (
 
 export const createEntity = async (payload: Omit<TEntity, "id">) => {
   try {
-    const entityRef = await addDoc(collection(db, "entities"), payload);
+    const entityRef = await addDoc(entitiesRef, payload);
     return { success: true, data: entityRef.id };
+  } catch (err) {
+    return { success: false, err };
+  }
+};
+export const updateEntity = async (payload: Partial<TEntity>, id: string) => {
+  try {
+    const entityRef = await updateDoc(doc(db, "entities", id), {
+      ...payload,
+      updated_at: Timestamp.now()
+    });
+    return { success: true };
   } catch (err) {
     return { success: false, err };
   }

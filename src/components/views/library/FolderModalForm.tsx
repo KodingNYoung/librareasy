@@ -1,4 +1,7 @@
-import { createFolder } from "@/app/(organization)/library/actions";
+import {
+  createFolder,
+  renameFolder
+} from "@/app/(organization)/library/actions";
 import SubmitBtn from "@/components/molecules/SubmitBtn";
 import { useModalContext } from "@/hooks/modalHooks";
 import { useFormToast } from "@/hooks/toastHooks";
@@ -23,7 +26,7 @@ const FolderModalForm: FC<Props> = ({ isEdit, data, parent }) => {
   const { close } = useModalContext();
 
   const [response, action] = useFormState<ModalFormStateType>(
-    isEdit ? console.log : (createFolder as any),
+    (isEdit ? renameFolder : createFolder) as any,
     initialValues
   );
 
@@ -38,6 +41,7 @@ const FolderModalForm: FC<Props> = ({ isEdit, data, parent }) => {
   return (
     <form className="grid gap-4 my-4" action={action} ref={formRef}>
       <input hidden value={parent} name="parent" readOnly />
+      {isEdit && <input hidden readOnly name="id" value={data?.id} />}
       <Input
         name="name"
         labelPlacement="outside"
@@ -45,6 +49,7 @@ const FolderModalForm: FC<Props> = ({ isEdit, data, parent }) => {
         size="lg"
         radius="sm"
         defaultValue={data?.name || "New folder"}
+        autoFocus
         onFocus={e => (e.currentTarget as HTMLInputElement).select()}
       />
       <div className="flex justify-end items-center gap-2">
