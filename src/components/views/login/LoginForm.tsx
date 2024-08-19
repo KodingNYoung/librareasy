@@ -1,20 +1,18 @@
 "use client";
-import { login } from "@/app/lib/actions/forms";
 import PasswordInput from "@/components/molecules/PasswordInput";
 import SubmitBtn from "@/components/molecules/SubmitBtn";
-import { useFormToast } from "@/hooks/toastHooks";
+import { Routes } from "@/utilities/enums";
 import { FC, FormState } from "@/utilities/types";
 import { Input } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 import React from "react";
-import { useFormState } from "react-dom";
-import { toast } from "react-toastify";
 
 export type LoginFields = "email" | "password";
 
 type LoginFormState = {
   email: string;
   password: string;
-} & FormState<LoginFields>;
+} & FormState;
 
 const initialValues: LoginFormState = {
   email: "",
@@ -22,25 +20,12 @@ const initialValues: LoginFormState = {
 };
 
 const LoginForm: FC = () => {
-  const [response, action] = useFormState<LoginFormState>(
-    login as any,
-    initialValues
-  );
-
-  const formRef = useFormToast(response, "Authenticating");
-
-  //   const state = {
-  //     success: { message: "Test success message" },
-  //     error: { message: "Test error message" },
-  //     field: { password: "", email: "" },
-  //     type: "validation" || "request"
-  //   };
-
-  //   console.log(response);
-  //   const test = toast.error("Hello");
-  //   console.log(test);
+  const router = useRouter();
+  const login = () => {
+    router.push(Routes.OVERVIEW);
+  };
   return (
-    <form className="flex flex-col gap-4" action={action} ref={formRef}>
+    <form className="flex flex-col gap-4" action={login}>
       <Input
         name="email"
         label="Email"
@@ -51,10 +36,6 @@ const LoginForm: FC = () => {
         radius="sm"
         placeholder="johndoe@example.com"
         defaultValue=""
-        isInvalid={Boolean(
-          response.errorType === "validation" && response?.fields?.email
-        )}
-        errorMessage={response.fields?.email}
       />
       <PasswordInput
         name="password"
@@ -66,13 +47,8 @@ const LoginForm: FC = () => {
         radius="sm"
         placeholder="********"
         defaultValue=""
-        isInvalid={Boolean(
-          response.errorType === "validation" && response?.fields?.password
-        )}
-        errorMessage={response.fields?.password}
       />
       <SubmitBtn>Login</SubmitBtn>
-      {/* {response?.message || } */}
     </form>
   );
 };

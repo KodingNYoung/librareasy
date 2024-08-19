@@ -1,8 +1,7 @@
 import { Roles } from "@/utilities/enums";
-import { Schema } from "mongoose";
 
 export interface IUser {
-  _id?: typeof Schema.Types.ObjectId;
+  id?: string;
   first_name: string;
   last_name: string;
   email: string;
@@ -19,5 +18,5 @@ export interface IOrganization {
   description?: string;
   logo?: string;
   no_of_members?: number;
-  owner?: typeof Schema.Types.ObjectId;
+  owner?: string;
 }

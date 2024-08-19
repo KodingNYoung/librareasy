@@ -2,6 +2,7 @@
 import { FC } from "@/utilities/types";
 import {
   Input,
+  InputProps,
   Pagination,
   Table,
   TableBody,
@@ -9,10 +10,12 @@ import {
   TableColumn,
   TableHeader,
   TableProps,
-  TableRow
+  TableRow,
+  TableSlots
 } from "@nextui-org/react";
 import React, {
   ChangeEvent,
+  HTMLProps,
   Key,
   ReactNode,
   useCallback,
@@ -21,24 +24,31 @@ import React, {
 import Icon from "../atoms/Icon";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
+import { cls } from "@/utilities/helpers";
 
 export type TableColumnType = {
   label: string | ReactNode;
   id: string;
   align?: "start" | "center" | "end";
 };
+type Slots = TableSlots | "top" | "bottom" | "root";
 
 type Props = TableProps & {
   columns: TableColumnType[];
   data: any[];
   renderCell: (key: Key, row: any) => ReactNode;
   actions?: ReactNode;
-  searchProps?: {
+  classNames?: { [slot in Slots]?: string };
+  rowProps?: Omit<HTMLProps<HTMLTableRowElement>, "as" | "onDoubleClick"> & {
+    onDoubleClick: (row: any) => void;
+  };
+  searchProps?: InputProps & {
     onSearch?: (e: ChangeEvent<HTMLInputElement>) => void;
     placeholder?: string;
   };
   paginationProps?: {
-    totalCount: number;
+    enable?: boolean;
+    totalCount?: number;
     rowsPerPageOptions?: number[];
     onPageChange?: (value: number) => void;
     onRowsPerPageChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
@@ -52,10 +62,17 @@ const AppTable: FC<Props> = ({
   actions,
   searchProps = {},
   paginationProps = { totalCount: 0, rowsPerPageOptions: [] },
+  classNames: { top, bottom, root, ...classNames } = {},
+  rowProps,
   ...props
 }) => {
-  const { onSearch, placeholder: searchPlaceholder } = searchProps;
   const {
+    onSearch,
+    placeholder: searchPlaceholder,
+    ...otherSearchProps
+  } = searchProps;
+  const {
+    enable,
     totalCount,
     rowsPerPageOptions = [5, 10, 15],
     onPageChange,
@@ -94,14 +111,17 @@ const AppTable: FC<Props> = ({
   //   memos
   const topContent = useMemo(
     () => (
-      <div className="flex gap-3 items-center flex-wrap">
+      <div className={cls("flex gap-3 items-center flex-wrap", top)}>
         {searchProps && (
           <Input
             className="w-full max-w-96"
             placeholder={searchPlaceholder || "Search..."}
-            startContent={<Icon name="icon-search-refraction" />}
+            startContent={
+              <Icon name="icon-search-refraction" className="text-base" />
+            }
             defaultValue={searchParams.get("q")?.toString() || ""}
             onChange={onSearch || handleSearchChange}
+            {...otherSearchProps}
           />
         )}
         <div className="flex-1" />
@@ -112,8 +132,13 @@ const AppTable: FC<Props> = ({
   );
   const bottomContent = useMemo(
     () =>
-      paginationProps && (
-        <div className="flex items-center justify-between flex-wrap text-foreground-500">
+      enable && (
+        <div
+          className={cls(
+            "flex items-center justify-between flex-wrap text-foreground-500",
+            bottom
+          )}
+        >
           <span className="text-small">Total {totalCount} items</span>
           <Pagination
             isCompact
@@ -138,28 +163,37 @@ const AppTable: FC<Props> = ({
   );
 
   return (
-    <Table topContent={topContent} bottomContent={bottomContent} {...props}>
-      <TableHeader columns={columns}>
-        {column => {
-          return (
-            <TableColumn key={column.id} align={column?.align || "start"}>
-              {column.label}
-            </TableColumn>
-          );
-        }}
-      </TableHeader>
-      <TableBody items={data} emptyContent={"No rows to display."}>
-        {item => {
-          return (
-            <TableRow key={item?._id}>
-              {columnKey => (
-                <TableCell>{renderCell(columnKey, item)}</TableCell>
-              )}
-            </TableRow>
-          );
-        }}
-      </TableBody>
-    </Table>
+    <div className={cls("flex flex-col relative gap-4 w-full", root)}>
+      {topContent}
+      <Table classNames={classNames} {...props}>
+        <TableHeader columns={columns}>
+          {column => {
+            return (
+              <TableColumn key={column.id} align={column?.align || "start"}>
+                {column.label}
+              </TableColumn>
+            );
+          }}
+        </TableHeader>
+        <TableBody items={data} emptyContent={"No rows to display."}>
+          {item => {
+            const { onDoubleClick, className, ...props } = rowProps || {};
+            return (
+              <TableRow
+                key={item?.id}
+                onDoubleClick={() => onDoubleClick && onDoubleClick(item)}
+                {...props}
+              >
+                {columnKey => (
+                  <TableCell>{renderCell(columnKey, item)}</TableCell>
+                )}
+              </TableRow>
+            );
+          }}
+        </TableBody>
+      </Table>
+      {bottomContent}
+    </div>
   );
 };
 

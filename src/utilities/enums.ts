@@ -3,6 +3,7 @@ export enum Routes {
   REGISTER = "/register",
   OVERVIEW = "/overview",
   LIBRARY = "/library",
+  FOLDER = "/library/folder",
   TEAMS = "/teams",
   USERS = "/teams/users",
   ORGANIZATIONS = "/teams/organizations",
@@ -23,4 +24,8 @@ export enum Roles {
   OWNER = "owner",
   ADMIN = "admin",
   MEMBER = "member"
+}
+export enum EntityTypes {
+  FOLDER = "folder",
+  FILE = "file"
 }

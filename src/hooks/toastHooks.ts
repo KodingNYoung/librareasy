@@ -26,43 +26,40 @@ export const useFormToast = (
     return () => form.removeEventListener("formdata", openToast);
   }, [formRef]);
 
-  // handle form success
   useEffect(() => {
-    if ("success" in formState) {
-      const toastProps: ToastOptions = {
-        type: "success",
-        isLoading: false,
-        autoClose: 3000,
-        closeButton: true
-      };
+    const toastProps: ToastOptions = {
+      isLoading: false,
+      autoClose: 3000,
+      closeButton: true
+    };
+    // handle form success
+    if ("success" in formState && formState.success) {
       if (toastRef.current) {
         toast.update(toastRef.current, {
           ...toastProps,
-          render: formState.success?.message
+          type: "success",
+          render: formState.message
         });
       } else {
-        toast(formState.success?.message, toastProps);
+        toast(formState.message, toastProps);
       }
     }
-  }, [formState]);
-
-  // handle form failed
-  useEffect(() => {
-    if ("error" in formState) {
-      const toastProps: ToastOptions = {
-        type: "error",
-        isLoading: false,
-        autoClose: 3000,
-        closeButton: true
-      };
+    // handle form failed request
+    if ("success" in formState && !formState.success && formState.errorType) {
       if (toastRef.current) {
         toast.update(toastRef.current, {
           ...toastProps,
-          render: formState.error?.message
+          type: "error",
+          render: formState.message
         });
       } else {
-        toast(formState.error?.message, toastProps);
+        toast(formState.message, toastProps);
       }
+    }
+    // handle form failed validation
+    if ("fields" in formState) {
+      console.log("Hello fields", console.log(formState.fields));
+      toast.dismiss(toastRef.current);
     }
   }, [formState]);
 

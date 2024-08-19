@@ -3,7 +3,6 @@ import { FC } from "@/utilities/types";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import React from "react";
 import { Roles } from "@/utilities/enums";
-import { addUser, editUser } from "@/app/lib/actions/forms";
 import { TUser } from ".";
 
 type Props = {
@@ -15,8 +14,8 @@ type Props = {
 const UserModalForm: FC<Props> = ({ close, isEdit, data }) => {
   const action = async (formData: FormData) => {
     isEdit
-      ? await editUser(data?._id as string, formData)
-      : await addUser(formData);
+      ? await console.log(data?._id as string, formData)
+      : await console.log(formData);
     close();
   };
   return (
@@ -82,8 +81,7 @@ const UserModalForm: FC<Props> = ({ close, isEdit, data }) => {
           { value: "member", label: "Member" }
         ]}
         classNames={{
-          base: "col-span-2",
-          listbox: "text-monochrome-1800 dark:text-monochrome-100"
+          base: "col-span-2"
         }}
         selectionMode="single"
         defaultSelectedKeys={[data?.role || Roles.MEMBER]}
