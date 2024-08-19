@@ -15,7 +15,7 @@ const Login: FC = () => {
       </header>
       <LoginForm />
       <span className="text-center mt-5">
-        I'm a new user! <Link href={Routes.REGISTER}>Create account</Link>
+        I am a new user! <Link href={Routes.REGISTER}>Create account</Link>
       </span>
     </div>
   );

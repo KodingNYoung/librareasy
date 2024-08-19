@@ -12,7 +12,7 @@ export type LoginFields = "email" | "password";
 type LoginFormState = {
   email: string;
   password: string;
-} & FormState<LoginFields>;
+} & FormState;
 
 const initialValues: LoginFormState = {
   email: "",
