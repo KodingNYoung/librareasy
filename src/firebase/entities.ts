@@ -3,6 +3,7 @@ import {
   addDoc,
   collection,
   doc,
+  getDoc,
   getDocs,
   query,
   updateDoc,
@@ -12,7 +13,9 @@ import { db } from ".";
 import { TEntity } from "@/utilities/objectTypes";
 import { converter } from "./utils";
 
-const entitiesRef = collection(db, "entities").withConverter(
+const COLLECTION = "entities";
+
+const collectionRef = collection(db, COLLECTION).withConverter(
   converter<TEntity>()
 );
 
@@ -23,7 +26,7 @@ export const getAllEntities = async (
   try {
     const entities = await getDocs(
       query(
-        entitiesRef,
+        collectionRef,
         where("organization", "==", organization),
         where("parent", "==", parent)
       )
@@ -42,9 +45,22 @@ export const getAllEntities = async (
   }
 };
 
+export const getEntity = async (id: string) => {
+  try {
+    const entity = await getDoc(
+      doc(db, COLLECTION, id).withConverter(converter<TEntity>())
+    );
+    console.log(entity);
+    // return JSON.parse(JSON.stringify())
+  } catch (err) {
+    console.log(err);
+    return {};
+  }
+};
+
 export const createEntity = async (payload: Omit<TEntity, "id">) => {
   try {
-    const entityRef = await addDoc(entitiesRef, payload);
+    const entityRef = await addDoc(collectionRef, payload);
     return { success: true, data: entityRef.id };
   } catch (err) {
     return { success: false, err };
@@ -52,7 +68,7 @@ export const createEntity = async (payload: Omit<TEntity, "id">) => {
 };
 export const updateEntity = async (payload: Partial<TEntity>, id: string) => {
   try {
-    const entityRef = await updateDoc(doc(db, "entities", id), {
+    await updateDoc(doc(db, COLLECTION, id), {
       ...payload,
       updated_at: Timestamp.now()
     });
