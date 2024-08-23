@@ -1,8 +1,7 @@
 "use client";
 
-import { IUser } from "@/app/lib/types";
 import Icon from "@/components/atoms/Icon";
-import { FC } from "@/utilities/types";
+import { FC, IUser } from "@/utilities/types";
 import { Button, Chip, User } from "@nextui-org/react";
 import React, { Key, useCallback, useState } from "react";
 import UserModal from "./UserModal";

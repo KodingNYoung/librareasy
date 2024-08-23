@@ -1,10 +1,9 @@
 "use client";
-import { IOrganization } from "@/app/lib/types";
 import Icon from "@/components/atoms/Icon";
 import AppTable, { TableColumnType } from "@/components/organisms/AppTable";
 import { useModal } from "@/hooks/modalHooks";
 import { PopupModes } from "@/utilities/enums";
-import { FC } from "@/utilities/types";
+import { FC, IOrganization } from "@/utilities/types";
 import { Button, User } from "@nextui-org/react";
 import React, { Key, useCallback, useState } from "react";
 

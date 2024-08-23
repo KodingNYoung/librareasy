@@ -18,6 +18,7 @@ import { useModal } from "@/hooks/modalHooks";
 import { EntityTypes, PopupModes, Routes } from "@/utilities/enums";
 import { useRouter } from "next/navigation";
 import LibraryTableActions from "./LibraryTableActions";
+import LibraryBreadcrumbs from "@/components/views/library/LibraryBreadcrumbs";
 
 type Props = {
   entities: TEntity[];
@@ -97,7 +98,8 @@ const Library: FC<Props> = ({ entities, folder }) => {
   };
 
   return (
-    <div className="p-2.5 sm:p-5 py-2.5 sm:py-4 relative h-full">
+    <div className="p-2.5 sm:p-5 py-2.5 sm:py-4 relative h-full flex flex-col gap-4">
+      <LibraryBreadcrumbs folder={folder || ""} />
       <AppTable
         columns={columns}
         data={entities}
