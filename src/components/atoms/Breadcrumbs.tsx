@@ -18,8 +18,10 @@ const AppBreadcrumbs: FC<Props> = ({ items, ...props }) => {
       itemsAfterCollapse={2}
       {...props}
     >
-      {items.map(({ label, link }) => (
-        <BreadcrumbItem href={link}>{label}</BreadcrumbItem>
+      {items.map(({ label, link }, idx) => (
+        <BreadcrumbItem href={link} key={idx}>
+          {label}
+        </BreadcrumbItem>
       ))}
     </Breadcrumbs>
   );
